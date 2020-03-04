@@ -8,6 +8,6 @@ def move(authToken, direction, nextRoomObject):
         print(e)
     
     data = r.json()
-
+    print(f"sleeping for {data['cooldown']}")
     time.sleep(data["cooldown"])
     return data

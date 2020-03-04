@@ -4,6 +4,8 @@ from get_current_location import get_current_location
 import sys
 sys.path.insert(1, "../utils")
 from save_map import save_map
+import time
+import datetime
 
 def reverseDirection(direction):
   if direction == "n":
@@ -24,7 +26,8 @@ def formatExits(exitsArray):
   return exitsObject
 
 
-def create_map(authToken): 
+def create_map(authToken):
+  start_time = time.time() 
   #set some global variables
   startingInfo = get_current_location(authToken)
   currentRoomNumber = startingInfo["room_id"]
@@ -64,9 +67,9 @@ def create_map(authToken):
     lastDirection = currentDirections.pop()
     nextDirection = reverseDirection(lastDirection)
   
-  while (len(visitedRooms) == 2): 
+  while (len(visitedRooms) < 500):
+    print(f"It's been {datetime.timedelta(seconds=(time.time() - start_time))} since we've started, and we have found {len(visitedRooms)} rooms!")
     nextRoomData = move(authToken, nextDirection, nextRoomObject)
-    print(nextRoomData)
     newRoomID = nextRoomData["room_id"]
 
     if (newRoomID not in _map): 
@@ -108,5 +111,7 @@ def create_map(authToken):
     else: 
       lastDirection = currentDirections.pop()
       nextDirection = reverseDirection(lastDirection)
+
+      nextRoomObject = {"next_room_id": str(_map[currentRoomNumber]["exits"][nextDirection])}
     
   save_map(_map)
