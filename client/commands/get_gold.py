@@ -11,9 +11,6 @@ from _map import _map
 from find_shortest_path import find_shortest_path
 from tokens import devinToken
 
-#helper function findShortestPathInDirections(startingRoom, targetRoom < 200)
-print(find_shortest_path(_map, 1, 100))
-
 def get_items_worth(items_list):
     items_dict = {
         "small treasure": 200,
@@ -71,7 +68,3 @@ def get_gold(authToken, amount=1000):
     sell_items(authToken, my_items)
 
     print(check_inventory(authToken))
-
-    
-
-get_gold(devinToken, amount=1000)
