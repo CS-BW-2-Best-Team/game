@@ -68,7 +68,6 @@ def create_map(authToken):
     nextDirection = reverseDirection(lastDirection)
   
   while (len(visitedRooms) < 500):
-    print(f"It's been {datetime.timedelta(seconds=(time.time() - start_time))} since we've started, and we have found {len(visitedRooms)} rooms!")
     nextRoomData = move(authToken, nextDirection, nextRoomObject)
     newRoomID = nextRoomData["room_id"]
 
@@ -79,11 +78,11 @@ def create_map(authToken):
       # ["n", "s"] => "n": "?"
       _map[newRoomID]["exits"] = formatExits(_map[newRoomID]["exits"])
 
-      # add this new room to the old room's exits
-      _map[newRoomID]["exits"][reverseDirection(nextDirection)] = currentRoomNumber
+    # add this new room to the old room's exits
+    _map[newRoomID]["exits"][reverseDirection(nextDirection)] = currentRoomNumber
 
-      # add the old room to the new room's exits
-      _map[currentRoomNumber]["exits"][nextDirection] = newRoomID
+    # add the old room to the new room's exits
+    _map[currentRoomNumber]["exits"][nextDirection] = newRoomID
     
     currentRoomNumber = newRoomID
 
@@ -114,4 +113,4 @@ def create_map(authToken):
 
       nextRoomObject = {"next_room_id": str(_map[currentRoomNumber]["exits"][nextDirection])}
     
-  save_map(_map)
+    save_map(_map)

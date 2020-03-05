@@ -19,4 +19,3 @@ def get_map(authToken):
         create_map(authToken)
         get_map(authToken)
 
-get_map(sethToken)

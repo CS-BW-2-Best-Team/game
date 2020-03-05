@@ -25,7 +25,7 @@ def get_items_worth(items_list):
 
     for item in items_list:
         #Items we don't know about - assume they are as awful as the worst item
-        if item not in item_dict:
+        if item not in items_dict:
             worth += 100
         else:
             worth += items_dict[item]
@@ -41,7 +41,6 @@ def get_gold(authToken, amount=1000):
     directions = find_shortest_path(_map, current_room, random.randint(1,200))
     
     while get_items_worth(my_items) < amount:
-        print(my_items)
         if len(directions) == 0:
             directions = find_shortest_path(_map, current_room, random.randint(1,200))
 
@@ -60,11 +59,8 @@ def get_gold(authToken, amount=1000):
     directions_to_shop = find_shortest_path(_map, current_room, 1)
     #go to shop
     while len(directions_to_shop) != 0:
-        print("going to shop!")
         next_direction = directions_to_shop.pop(0)
         move_to_shop_data = move(authToken, next_direction, {"next_room_id": str(_map[current_room]["exits"][next_direction])})
         current_room = move_to_shop_data["room_id"]
 
     sell_items(authToken, my_items)
-
-    print(check_inventory(authToken))

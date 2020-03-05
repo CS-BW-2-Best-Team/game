@@ -1,7 +1,6 @@
 from io import StringIO
 import sys
 import re
-sys.path.append("../cpu/")
 from cpu import CPU
 from write_to_ls8 import write_to_ls8
 
