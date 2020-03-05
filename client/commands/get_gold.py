@@ -9,7 +9,7 @@ from sell_items import sell_items
 sys.path.append("../utils/")
 from _map import _map
 from find_shortest_path import find_shortest_path
-from tokens import nazifaToken
+from tokens import devinToken
 
 #helper function findShortestPathInDirections(startingRoom, targetRoom < 200)
 print(find_shortest_path(_map, 1, 100))
@@ -20,13 +20,18 @@ def get_items_worth(items_list):
         "tiny treasure": 100,
         "shiny treasure": 300,
         "great treasure": 400,
-        "amazing treasure": 500
+        "amazing treasure": 500,
+        "spectacular treasure": 600
     }
 
     worth = 0
 
     for item in items_list:
-        worth += items_dict[item]
+        #Items we don't know about - assume they are as awful as the worst item
+        if item not in item_dict:
+            worth += 100
+        else:
+            worth += items_dict[item]
     return worth
 
 def get_gold(authToken, amount=1000):
@@ -69,4 +74,4 @@ def get_gold(authToken, amount=1000):
 
     
 
-get_gold(nazifaToken)
+get_gold(devinToken, amount=1000)
