@@ -15,24 +15,29 @@ from get_room_from_message import get_room_from_message
 sys.path.append("../miner/")
 from miner import mine_coin
 
-def get_coin(token, new_name):
-    start_time = time.time()
-    print("Building the map!")
-    _map = get_map(token)
-    print("Getting Gold!")
-    get_gold(token, amount=1000)
-    print("Changing my Name!")
-    change_name(_map, token, new_name)
-    print("Getting the message!")
-    message = examine_well(_map, token)["description"]
-    print("Decrypting the message!")
-    room_number = get_room_from_message(message)
-    print("Moving the room to mine!")
-    traverse_shortest_path(_map, token, int(room_number))
-    print("Mining!")
-    mine_coin(token)
-    print(f"It took us {datetime.timedelta(seconds=(time.time() - start_time))} to mine one coin from start to finish!")
+def get_coin(token, new_name, need_to_change_name = True):
+    while True:
+        start_time = time.time()
+        print("Building the map!")
+        _map = get_map(token)
+
+        while need_to_change_name == True:
+            print("Getting Gold!")
+            get_gold(token, amount=1000)
+            print("Changing my Name!")
+            change_name(_map, token, new_name)
+            need_to_change_name = False
+        
+        print("Getting the message!")
+        message = examine_well(_map, token)["description"]
+        print("Decrypting the message!")
+        room_number = get_room_from_message(message)
+        print("Moving the room to mine!")
+        traverse_shortest_path(_map, token, int(room_number))
+        print("Mining!")
+        mine_coin(token)
+        print(f"It took us {datetime.timedelta(seconds=(time.time() - start_time))} to mine one coin from start to finish!")
 
 print(get_coin_balance(sethToken))
-get_coin(sethToken, "The Cajoling Man")
+get_coin(sethToken, "Seth, the Slayer")
 print(get_coin_balance(sethToken))

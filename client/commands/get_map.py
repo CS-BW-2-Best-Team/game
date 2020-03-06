@@ -11,7 +11,9 @@ def get_map(authToken):
         with open("../utils/map.txt") as json_file:
             print("the file exists!")
             data = json.load(json_file)
+            data = {int(k):v for k,v in data.items()}
             return data
+             
     except FileNotFoundError:
         print("that file doesn't exist!")
         #do all the stuff to make a map
